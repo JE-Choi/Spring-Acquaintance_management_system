@@ -1,6 +1,7 @@
 package com.spring.project1.project1.repository;
 
 import com.spring.project1.project1.domain.Person;
+import com.spring.project1.project1.domain.dto.Birthday;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -60,10 +61,10 @@ class PersonRepositoryTests {
     }
 
     @Test
-    void findByBirthdayBetween(){
+    void findByMonthOfBirthday(){
         givenPeople();
-        // 1991-08-01이상~ 08-31이하
-        List<Person> result = personRepository.findByBirthdayBetween(LocalDate.of(1991, 8,1), LocalDate.of(1991, 8,31));
+        // 8월
+        List<Person> result = personRepository.findByMonthOfBirthday(8);
         result.forEach(System.out::println);
     }
 
@@ -77,7 +78,7 @@ class PersonRepositoryTests {
 
     private void givenPerson(String name, int age, String bloodType, LocalDate birthDay) {
         Person person = new Person(name, age, bloodType);
-        person.setBirthday(birthDay);
+        person.setBirthday(new Birthday(birthDay));
         personRepository.save(person);
     }
 }

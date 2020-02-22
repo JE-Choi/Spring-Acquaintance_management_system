@@ -1,8 +1,10 @@
 package com.spring.project1.project1.domain;
 
+import com.spring.project1.project1.domain.dto.Birthday;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.time.LocalDate;
 
 @Entity
@@ -10,7 +12,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
-
 public class Person {
     @Id
     @GeneratedValue // Id 자동생성을 위해
@@ -23,7 +24,9 @@ public class Person {
     @NonNull
     private String bloodType;
     private String address;
-    private LocalDate birthday;
+    @Valid
+    @Embedded
+    private Birthday birthday;
     private  String job;
     @ToString.Exclude //getter에서 제외할 항목 인자로 넣음
     private  String phoneNumber;
