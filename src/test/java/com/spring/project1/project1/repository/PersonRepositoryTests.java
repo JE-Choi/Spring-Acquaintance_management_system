@@ -33,11 +33,6 @@ class PersonRepositoryTests {
         assertThat(people.get(0).getBloodType()).isEqualTo("A");
     }
 
-//    @Test
-//    void allArgsConstructor(){
-//        Person person = new Person(1L, "martin", 10, "reading", "A", "분당", LocalDate.of(2019,1,1), "programmer", "010-1234-1234");
-//    }
-
     @Test
     void constuctorTest(){
         Person person = new Person("martin",10, "A");
@@ -55,5 +50,34 @@ class PersonRepositoryTests {
         map.put(person1, person1.getAge());
         System.out.println(map);
         System.out.println(map.get(person2));
+    }
+
+    @Test
+    void findByBloodType(){
+        givenPeople();
+        List<Person> result = personRepository.findByBloodType("A");
+        result.forEach(System.out::println);
+    }
+
+    @Test
+    void findByBirthdayBetween(){
+        givenPeople();
+        // 1991-08-01이상~ 08-31이하
+        List<Person> result = personRepository.findByBirthdayBetween(LocalDate.of(1991, 8,1), LocalDate.of(1991, 8,31));
+        result.forEach(System.out::println);
+    }
+
+    private void givenPeople() {
+        givenPerson("martin",10,"A", LocalDate.of(1991,8,3));
+        givenPerson("drtin",9,"B", LocalDate.of(1991,8,28));
+        givenPerson("cytin",7,"O", LocalDate.of(1992,7,3));
+        givenPerson("martin",11,"AB", LocalDate.of(1993,6,3));
+        givenPerson("giny",9,"A", LocalDate.of(1995,8,10));
+    }
+
+    private void givenPerson(String name, int age, String bloodType, LocalDate birthDay) {
+        Person person = new Person(name, age, bloodType);
+        person.setBirthday(birthDay);
+        personRepository.save(person);
     }
 }

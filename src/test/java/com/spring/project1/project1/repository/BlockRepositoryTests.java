@@ -25,7 +25,6 @@ class BlockRepositoryTests {
         block.setEndDate(LocalDate.now());
 
         blockRepository.save(block);
-        // 객체 타입 지정 안 해주면, 메소드 자동완성 안됨.
         List<Block> block_list = blockRepository.findAll();
         assertThat(block_list.size()).isEqualTo(1);
         assertThat(block_list.get(0).getName()).isEqualTo("martin");
