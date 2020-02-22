@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import java.time.LocalDate;
 
 @Entity
@@ -35,6 +36,9 @@ public class Person {
     private  String job;
     @ToString.Exclude //getter에서 제외할 항목 인자로 넣음
     private  String phoneNumber;
+
+    @OneToOne
+    private Block block; // 해당 person에 관해서 block을 했는지에 대한 여부 저장
 //    // 8강 @EqualsAndHashCode로 대체
 //    @Override
 //    public boolean equals(Object obj) {

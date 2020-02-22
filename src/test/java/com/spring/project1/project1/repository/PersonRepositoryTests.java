@@ -33,10 +33,10 @@ class PersonRepositoryTests {
         assertThat(people.get(0).getBloodType()).isEqualTo("A");
     }
 
-    @Test
-    void allArgsConstructor(){
-        Person person = new Person(1L, "martin", 10, "reading", "A", "분당", LocalDate.of(2019,1,1), "programmer", "010-1234-1234");
-    }
+//    @Test
+//    void allArgsConstructor(){
+//        Person person = new Person(1L, "martin", 10, "reading", "A", "분당", LocalDate.of(2019,1,1), "programmer", "010-1234-1234");
+//    }
 
     @Test
     void constuctorTest(){

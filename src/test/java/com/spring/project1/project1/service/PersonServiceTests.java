@@ -24,7 +24,7 @@ class PersonServiceTests {
     @Test
     void getPeopleExcludeBlocks() {
         givenPeople(); // 사용자 Jpa에 저장
-        givenBlocks(); // Block 사용자 Jpa에 저장
+//        givenBlocks(); // Block 사용자 Jpa에 저장
 
         // Block 사용자를 제외한 모든 사용자 추출
         List<Person> result = personService.getPeopleExcludeBlocks();
@@ -35,21 +35,27 @@ class PersonServiceTests {
     private void givenPeople() {
         givenPerson("martin",10,"A");
         givenPerson("drtin",9,"B");
-        givenPerson("cytin",7,"O");
-        givenPerson("martin",11,"AB");
+        givenBlockPerson("cytin",7,"O");
+        givenBlockPerson("martin",11,"AB");
     }
 
-    private void givenBlocks() {
-        givenBlock("martin");
-    }
+//    private void givenBlocks() {
+//        givenBlock("martin");
+//    }
 
     private void givenPerson(String name, int age, String bloodType) {
         Person person = new Person(name, age, bloodType);
         personRepository.save(person);
     }
 
-    private void givenBlock(String name) {
+    private void givenBlockPerson(String name, int age, String bloodType){
+        Person blockPerson = new Person(name, age, bloodType);
+        blockPerson.setBlock(givenBlock(name));
+        personRepository.save(blockPerson);
+    }
+
+    private Block givenBlock(String name) {
         Block block = new Block(name);
-        blockRepository.save(block);
+        return blockRepository.save(block);
     }
 }
