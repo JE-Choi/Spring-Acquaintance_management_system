@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,7 +29,20 @@ public class PersonService {
 
     @Transactional(readOnly = true)
     public Person getPerson(Long id){
-        Person person = personRepository.findById(id).get();
+//        Person person = personRepository.findById(id).get();
+        /*
+        Optional<Person> person = personRepository.findById(id);
+
+        if (person.isPresent()){
+            log.info("person : {}", person);
+            return person.get();
+        } else{
+            return null;
+        }
+        또는 !!!
+        */
+        // 값이 없으면 null로
+        Person person = personRepository.findById(id).orElse(null);
         log.info("person : {}", person);
         return person;
     }

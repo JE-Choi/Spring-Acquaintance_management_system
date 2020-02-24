@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Person {
     @Id
-    @GeneratedValue // Id 자동생성을 위해
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Id 자동생성을 위해
     private Long id;
     @NonNull
     private String name;

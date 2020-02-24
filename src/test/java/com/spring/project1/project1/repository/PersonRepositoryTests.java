@@ -5,6 +5,7 @@ import com.spring.project1.project1.domain.dto.Birthday;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -13,6 +14,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+@Transactional // 트랜잭션이 rollback되도록
 @SpringBootTest
 class PersonRepositoryTests {
     @Autowired
@@ -25,13 +27,11 @@ class PersonRepositoryTests {
         person.setBloodType("A");
         personRepository.save(person);
 
-        System.out.println(personRepository.findAll());
-
-        List<Person> people = personRepository.findAll();
-        assertThat(people.size()).isEqualTo(1);
-        assertThat(people.get(0).getName()).isEqualTo("Dave");
-        assertThat(people.get(0).getAge()).isEqualTo(23);
-        assertThat(people.get(0).getBloodType()).isEqualTo("A");
+        List<Person> result = personRepository.findByName("Dave");
+        assertThat(result.size()).isEqualTo(1);
+        assertThat(result.get(0).getName()).isEqualTo("Dave");
+        assertThat(result.get(0).getAge()).isEqualTo(23);
+        assertThat(result.get(0).getBloodType()).isEqualTo("A");
     }
 
     @Test
@@ -40,40 +40,20 @@ class PersonRepositoryTests {
     }
 
     @Test
-    void hashCodeAndEquals(){
-        Person person1 = new Person("martin", 10, "A");
-        Person person2 = new Person("martin", 10, "A");
-        System.out.println(person1.equals(person2));
-        System.out.println(person1.hashCode());
-        System.out.println(person2.hashCode());
-
-        Map<Person, Integer> map = new HashMap<>();
-        map.put(person1, person1.getAge());
-        System.out.println(map);
-        System.out.println(map.get(person2));
-    }
-
-    @Test
     void findByBloodType(){
-        givenPeople();
         List<Person> result = personRepository.findByBloodType("A");
-        result.forEach(System.out::println);
+        assertThat(result.size()).isEqualTo(2);
+        assertThat(result.get(0).getName()).isEqualTo("martin");
+        assertThat(result.get(1).getName()).isEqualTo("benny");
     }
 
     @Test
     void findByMonthOfBirthday(){
-        givenPeople();
         // 8월
         List<Person> result = personRepository.findByMonthOfBirthday(8);
-        result.forEach(System.out::println);
-    }
-
-    private void givenPeople() {
-        givenPerson("martin",10,"A", LocalDate.of(1991,8,3));
-        givenPerson("drtin",9,"B", LocalDate.of(1991,8,28));
-        givenPerson("cytin",7,"O", LocalDate.of(1992,7,3));
-        givenPerson("martin",11,"AB", LocalDate.of(1993,6,3));
-        givenPerson("giny",9,"A", LocalDate.of(1995,8,10));
+        assertThat(result.size()).isEqualTo(2);
+        assertThat(result.get(0).getName()).isEqualTo("martin");
+        assertThat(result.get(1).getName()).isEqualTo("sophia");
     }
 
     private void givenPerson(String name, int age, String bloodType, LocalDate birthDay) {

@@ -26,7 +26,9 @@ class BlockRepositoryTests {
 
         blockRepository.save(block);
         List<Block> block_list = blockRepository.findAll();
-        assertThat(block_list.size()).isEqualTo(1);
-        assertThat(block_list.get(0).getName()).isEqualTo("martin");
+        assertThat(block_list.size()).isEqualTo(3);
+        assertThat(block_list.get(0).getName()).isEqualTo("dennis");
+        assertThat(block_list.get(1).getName()).isEqualTo("sophia");
+        assertThat(block_list.get(2).getName()).isEqualTo("martin");
     }
 }
