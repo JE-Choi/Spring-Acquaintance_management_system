@@ -1,7 +1,9 @@
 package com.spring.project1.project1.service;
 
+import com.spring.project1.project1.controller.dto.PersonDto;
 import com.spring.project1.project1.domain.Block;
 import com.spring.project1.project1.domain.Person;
+import com.spring.project1.project1.domain.dto.Birthday;
 import com.spring.project1.project1.repository.BlockRepository;
 import com.spring.project1.project1.repository.PersonRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -55,6 +57,28 @@ public class PersonService {
 
     @Transactional
     public void put(Person person){
+        personRepository.save(person);
+    }
+
+    @Transactional
+    public void modify(Long id, PersonDto personDto) {
+        Person person = personRepository.findById(id).orElseThrow(() -> new RuntimeException("아이디가 존재하지 않습니다."));
+
+        if (!person.getName().equals(personDto.getName())){
+            throw new RuntimeException("이름이 다릅니다.");
+        }
+
+        // 없는 값들 제외하고 set하기
+        person.set(personDto);
+
+        personRepository.save(person);
+    }
+
+    // 이름만 update 오버로딩
+    @Transactional
+    public void modify(Long id, String name) {
+        Person person = personRepository.findById(id).orElseThrow(() -> new RuntimeException("아이디가 존재하지 않습니다."));
+        person.setName(name);
         personRepository.save(person);
     }
 }
