@@ -5,6 +5,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 
 @Entity
@@ -17,11 +19,18 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Id 자동생성을 위해
     private Long id;
     @NonNull
+    @NotEmpty
+    @Column(nullable = false)
     private String name;
+
     @NonNull
+    @Min(1)
     private int age;
+
     private  String hobby;
     @NonNull
+    @Column(nullable = false)
+    @NotEmpty
     private String bloodType;
     private String address;
     @Valid
