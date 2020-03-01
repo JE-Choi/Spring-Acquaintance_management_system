@@ -3,6 +3,8 @@ package com.spring.project1.project1.domain;
 import com.spring.project1.project1.controller.dto.PersonDto;
 import com.spring.project1.project1.domain.dto.Birthday;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Where;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
@@ -17,6 +19,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
+@Where(clause = "deleted = false")
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Id 자동생성을 위해
@@ -42,6 +45,9 @@ public class Person {
     private  String job;
     @ToString.Exclude //getter에서 제외할 항목 인자로 넣음
     private  String phoneNumber;
+
+    @ColumnDefault("0") // 이 값이 True가 되면 삭제가 되었다라고, 간주
+    private boolean deleted;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude

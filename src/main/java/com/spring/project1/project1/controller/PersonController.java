@@ -33,7 +33,7 @@ public class PersonController {
         log.info("person -> {}" , personRepository.findAll());
     }
 
-    @PutMapping("/{id}") // 수정
+    @PutMapping("/{id}") // 전체 엔터티
     // @PathVariable는 링크값으로 id값을 얻는다는 것이고
     // @RequestBody는 requestBody에 넣어진 값으로 person값을 얻는다는 의미
     public void modifyPerson(@PathVariable Long id, @RequestBody PersonDto person){
@@ -41,9 +41,15 @@ public class PersonController {
         log.info("person -> {}",personRepository.findAll());
     }
 
-    @PatchMapping("/{id}") // 일부 부분만 update
+    @PatchMapping("/{id}") // 변경하고자 하는 속성만
     public void modifyPerson(@PathVariable Long id, String name){
         personService.modify(id, name);
         log.info("person -> {}",personRepository.findAll());
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletePerson(@PathVariable Long id){
+        personService.delete(id);
+        log.info("person -> {}", personRepository.findAll());
     }
 }
