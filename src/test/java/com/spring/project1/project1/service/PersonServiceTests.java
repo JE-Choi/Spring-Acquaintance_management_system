@@ -50,9 +50,9 @@ class PersonServiceTests {
     }
 
 
-    private void givenPerson(String name, int age, String bloodType) {
-        Person person = new Person(name, age, bloodType);
-        personRepository.save(person);
-    }
+//    private void givenPerson(String name, int age, String bloodType) {
+//        Person person = new Person(name, age, bloodType);
+//        personRepository.save(person);
+//    }
 
 }

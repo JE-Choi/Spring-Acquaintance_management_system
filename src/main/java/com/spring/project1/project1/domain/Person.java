@@ -29,10 +29,6 @@ public class Person {
     @Column(nullable = false)
     private String name;
 
-    @NonNull
-    @Min(1)
-    private int age;
-
     private  String hobby;
     @NonNull
     @Column(nullable = false)
@@ -55,9 +51,6 @@ public class Person {
 
     public void set(@NotNull PersonDto personDto){
         //        name, age, hobby, bloodType, address, birthday, job, phoneNumber
-        if (personDto.getAge() != 0){
-            this.setAge(personDto.getAge());
-        }
         if (!StringUtils.isEmpty(personDto.getHobby())){
             this.setHobby(personDto.getHobby());
         }
@@ -68,7 +61,7 @@ public class Person {
             this.setAddress(personDto.getAddress());
         }
         if (!StringUtils.isEmpty(personDto.getBirthday())){
-            this.setBirthday(new Birthday(personDto.getBirthday()));
+//            this.setBirthday(new Birthday(personDto.getBirthday()));
         }
         if (!StringUtils.isEmpty(personDto.getJob())){
             this.setJob(personDto.getJob());
@@ -76,5 +69,23 @@ public class Person {
         if (!StringUtils.isEmpty(personDto.getPhoneNumber())){
             this.setPhoneNumber(personDto.getPhoneNumber());
         }
+    }
+
+    public Integer getAge(){
+        if(this.birthday != null){
+            return LocalDate.now().getYear() - this.birthday.getYearOfBirthday() + 1;
+        } else{
+            return null;
+        }
+    }
+
+    // 오늘이 생일인지에 대한 메소드
+    public boolean isBirthdayToday(){
+        if(this.birthday != null){
+
+        } else{
+
+        }
+        return LocalDate.now().equals(LocalDate.of(this.birthday.getYearOfBirthday(), this.birthday.getMonthOfBirthday(), this.birthday.getDayOfBirthday()));
     }
 }
