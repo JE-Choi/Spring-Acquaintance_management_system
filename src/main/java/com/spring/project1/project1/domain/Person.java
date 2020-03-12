@@ -30,38 +30,31 @@ public class Person {
     private String name;
 
     private  String hobby;
-    @NonNull
-    @Column(nullable = false)
-    @NotEmpty
-    private String bloodType;
     private String address;
     @Valid
     @Embedded
     private Birthday birthday;
     private  String job;
-    @ToString.Exclude //getter에서 제외할 항목 인자로 넣음
+    // @ToString.Exclude //getter에서 제외할 항목 인자로 넣음
     private  String phoneNumber;
 
     @ColumnDefault("0") // 이 값이 True가 되면 삭제가 되었다라고, 간주
     private boolean deleted;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @ToString.Exclude
-    private Block block; // 해당 person에 관해서 block을 했는지에 대한 여부 저장
+//    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+//    @ToString.Exclude
+//    private Block block; // 해당 person에 관해서 block을 했는지에 대한 여부 저장
 
     public void set(@NotNull PersonDto personDto){
         //        name, age, hobby, bloodType, address, birthday, job, phoneNumber
         if (!StringUtils.isEmpty(personDto.getHobby())){
             this.setHobby(personDto.getHobby());
         }
-        if (!StringUtils.isEmpty(personDto.getBloodType())){
-            this.setBloodType(personDto.getBloodType());
-        }
         if (!StringUtils.isEmpty(personDto.getAddress())){
             this.setAddress(personDto.getAddress());
         }
         if (!StringUtils.isEmpty(personDto.getBirthday())){
-//            this.setBirthday(new Birthday(personDto.getBirthday()));
+            this.setBirthday(Birthday.of(personDto.getBirthday()));
         }
         if (!StringUtils.isEmpty(personDto.getJob())){
             this.setJob(personDto.getJob());
